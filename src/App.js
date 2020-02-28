@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
+import CardViewer from './components/CardViewer';
+import Loading from './components/Loading';
+import SearchBox from './components/SearchBox';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipes: null
+        };
+    }
+
+    async componentDidMount() {
+        const recipes = await axios.get('http://localhost:3000/recipes?name=chicken');
+        this.setState({ recipes });
+    }
+
+    render() {
+        return (
+            <div style={{ display: 'block' }}>
+                <SearchBox />
+                {this.state.recipes ? <CardViewer recipes={this.state.recipes} /> : <Loading />}
+            </div>
+        );
+    }
 }
 
 export default App;
