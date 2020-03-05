@@ -51,7 +51,7 @@ const Cards = (props) => {
                         <span className='insideTitle'>Ingredients:</span>
                         {props.recipe.extendedIngredients.map((ingredient, i) => {
                             return (
-                                <span>
+                                <span key={i}>
                                     {i === 0 ? '' : ','}&nbsp;{ingredient.name}
                                 </span>
                             );

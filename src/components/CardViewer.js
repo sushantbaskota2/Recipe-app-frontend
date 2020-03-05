@@ -1,7 +1,8 @@
 import React from 'react';
 import Cards from './Cards';
 
-const CardViewer = (props) => {
+
+const CardViewer = ({ recipes, clickMore, limit, query }) => {
     return (
         <section
             style={{
@@ -12,12 +13,23 @@ const CardViewer = (props) => {
                 position: 'absolute'
             }}
         >
-            {console.log(props.recipes)}
-            {props.recipes.data.map((recipe) => {
-                return <Cards recipe={recipe} />;
-            })}
+            {console.log(limit)}
+            {!query === '' ? (
+                recipes.filter((rec) => rec.includes(query)).map((rec) => {
+                    return <Cards recipe={rec} key={rec._id} />;
+                })
+            ) : (
+                recipes.slice(0, limit).map((recipe) => {
+                    return <Cards recipe={recipe} key={recipe._id} />;
+                })
+            )}
 
-            <div className='arrowDiv'>
+            <div
+                className='arrowDiv'
+                onClick={() => {
+                    clickMore();
+                }}
+            >
                 <svg className='arrows'>
                     <path className='a1' d='M0 0 L30 32 L60 0' />
                     <path className='a2' d='M0 20 L30 52 L60 20' />

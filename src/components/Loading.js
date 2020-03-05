@@ -2,14 +2,14 @@ import React from 'react';
 import './Loading.css';
 const Loading = () => {
     return (
-        <div class='container'>
-            <div class='sk-chase'>
-                <div class='sk-chase-dot' />
-                <div class='sk-chase-dot' />
-                <div class='sk-chase-dot' />
-                <div class='sk-chase-dot' />
-                <div class='sk-chase-dot' />
-                <div class='sk-chase-dot' />
+        <div className='container'>
+            <div className='sk-chase'>
+                <div className='sk-chase-dot' />
+                <div className='sk-chase-dot' />
+                <div className='sk-chase-dot' />
+                <div className='sk-chase-dot' />
+                <div className='sk-chase-dot' />
+                <div className='sk-chase-dot' />
             </div>
         </div>
     );
