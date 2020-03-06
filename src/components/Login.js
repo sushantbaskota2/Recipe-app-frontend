@@ -26,6 +26,7 @@ class Login extends React.Component {
             });
             if (user.status === 200) {
                 localStorage.setItem('jwtToken', user.data.token);
+                window.location.reload();
             }
 
             console.log(user);
@@ -59,7 +60,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className='login-body'>
+            <div className='login-body' style={this.props.style}>
                 <h2>Welcome to our recipe app!</h2>
                 <div className={`login-container ${this.state.clicked ? 'right-panel-active' : ''}`} id='container'>
                     <div className='form-container sign-up-container'>
@@ -105,7 +106,9 @@ class Login extends React.Component {
                                 value={this.state.password}
                                 placeholder='Password'
                             />
-                            <a href='#'>Forgot your password?</a>
+                            <a className='logina' href='#'>
+                                Forgot your password?
+                            </a>
                             <button onClick={this.login}>Sign In</button>
                         </form>
                     </div>

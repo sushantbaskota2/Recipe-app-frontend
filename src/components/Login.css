@@ -1,12 +1,7 @@
-/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-* {
-    box-sizing: border-box;
-}
-
-login-body {
-    background: #4a4947;
-    color: #fff;
+.login-body {
+    color: #000;
 
     display: flex;
     justify-content: center;
@@ -38,7 +33,7 @@ span {
     font-size: 12px;
 }
 
-a {
+.logina {
     color: #fff;
     font-size: 14px;
     text-decoration: none;
@@ -83,8 +78,9 @@ form {
     text-align: center;
 }
 
-input {
+.login-container input {
     background-color: #fff;
+
     border: 20px;
     border-radius: 25px;
     padding: 12px 15px;
@@ -214,4 +210,4 @@ input {
 
 .login-container.right-panel-active .overlay-right {
     transform: translateX(20%);
-} */
+}

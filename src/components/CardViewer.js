@@ -1,8 +1,8 @@
 import React from 'react';
 import Cards from './Cards';
+import { connect } from 'react-redux';
 
-
-const CardViewer = ({ recipes, clickMore, limit, query }) => {
+const CardViewer = ({ recipes, clickMore, limit, search }) => {
     return (
         <section
             style={{
@@ -13,10 +13,10 @@ const CardViewer = ({ recipes, clickMore, limit, query }) => {
                 position: 'absolute'
             }}
         >
-            {console.log(limit)}
-            {!query === '' ? (
-                recipes.filter((rec) => rec.includes(query)).map((rec) => {
-                    return <Cards recipe={rec} key={rec._id} />;
+            {console.log(search)}
+            {search ? (
+                recipes.filter((rec) => rec.title.toLowerCase().includes(search)).map((recipe) => {
+                    return <Cards recipe={recipe} key={recipe._id} />;
                 })
             ) : (
                 recipes.slice(0, limit).map((recipe) => {
@@ -40,4 +40,8 @@ const CardViewer = ({ recipes, clickMore, limit, query }) => {
     );
 };
 
-export default CardViewer;
+const mapStateToProps = (state, ownProps) => {
+    return { ...ownProps, search: state.search };
+};
+
+export default connect(mapStateToProps, {})(CardViewer);

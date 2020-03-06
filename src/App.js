@@ -23,11 +23,11 @@ class App extends React.Component {
 
     async componentDidMount() {
         let recipes = null;
-
-        recipes = await axios.get('http://localhost:3000/recipes');
-        this.setState({ recipes: recipes.data, loading: false });
         const user = await auth();
         this.setState({ user });
+        recipes = await axios.get('http://localhost:3000/recipes');
+        this.setState({ recipes: recipes.data, loading: false });
+
         console.log(user);
     }
 
@@ -53,22 +53,21 @@ class App extends React.Component {
     };
 
     render() {
-        return this.state.user != null ? (
+        return !this.state.loading ? this.state.user != null ? (
             <div style={{ display: 'block' }}>
                 <SearchBox inputChange={this.inputChange} />
-                {!this.state.loading ? (
-                    <CardViewer
-                        clickMore={this.clickMore}
-                        limit={this.state.limit}
-                        recipes={this.state.recipes}
-                        query={this.state.input}
-                    />
-                ) : (
-                    <Loading />
-                )}
+
+                <CardViewer
+                    clickMore={this.clickMore}
+                    limit={this.state.limit}
+                    recipes={this.state.recipes}
+                    query={this.state.input}
+                />
             </div>
         ) : (
-            <Login />
+            <Login style={{ boxSizing: 'border-box' }} />
+        ) : (
+            <Loading />
         );
     }
 }
