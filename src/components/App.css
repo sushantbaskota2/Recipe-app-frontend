@@ -55,7 +55,7 @@
 }
 
 .arrows path {
-    stroke: #e84118;
+    stroke: rgb(232, 65, 23);
     fill: transparent;
     stroke-width: 2px;
     animation: arrow 2s infinite;

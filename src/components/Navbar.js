@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './css/Nav.css';
 import axios from 'axios';
 import auth from '../auth';
+import { Link } from 'react-router-dom';
 
 const logout = async () => {
     const token = localStorage.getItem('jwtToken');
@@ -35,12 +36,12 @@ const Navbar = () => {
                 <div id='logo' />
                 <ul className='nav'>
                     <li>
-                        <a>Recipes</a>
+                        <Link to='/'>Recipes</Link>
                     </li>
                     {user ? (
                         <React.Fragment>
                             <li>
-                                <a>Profile</a>
+                                <Link to='/profile'>Profile</Link>
                             </li>
                             <li>
                                 <button onClick={logout}>Logout</button>
