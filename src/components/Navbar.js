@@ -3,6 +3,7 @@ import './css/Nav.css';
 import axios from 'axios';
 import auth from '../auth';
 import { Link } from 'react-router-dom';
+import history from '../history';
 
 const logout = async () => {
     const token = localStorage.getItem('jwtToken');
@@ -13,8 +14,8 @@ const logout = async () => {
 
     try {
         const user = await axios.post('http://localhost:3000/users/logout', {}, config);
+        history.push('/logout');
         console.log(user);
-        window.location.reload();
     } catch (e) {
         console.log(e);
     }
