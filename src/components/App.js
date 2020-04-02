@@ -1,13 +1,22 @@
 import React from 'react';
-import CardViewer from './CardViewer';
-
+import { Router, Route, Switch } from 'react-router-dom';
+import history from '../history';
+import Contents from './Contents';
+import Navbar from './Navbar';
 const App = () => {
-    const recipes = [ { i: 2, o: 3, c: 2 }, { i: 2, o: 3, c: 2 }, { i: 2, o: 3, c: 2 } ];
     return (
         <div>
-            <CardViewer recipes={recipes} />
+            <Router history={history}>
+                <Navbar />
+                <div style={{ paddingTop: '80' }}>
+                    <Switch>
+                        <Route path='/' exact component={Contents} />
+                    </Switch>
+                </div>
+            </Router>
         </div>
     );
 };
-
 export default App;
+
+//  <Route path='/recipes/:id' exact component={RecipeView} />

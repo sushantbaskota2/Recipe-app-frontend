@@ -1,15 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import CardViewer from './components/CardViewer';
-import Loading from './components/Loading';
-import SearchBox from './components/SearchBox';
+import CardViewer from './CardViewer';
+import Loading from './Loading';
+import SearchBox from './SearchBox';
+import Navbar from './Navbar';
 
-import auth from './auth/index';
+import auth from '../auth/index';
 
-import Login from './components/Login';
+import Login from './Login';
 
-class App extends React.Component {
+class Contents extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,15 +55,17 @@ class App extends React.Component {
 
     render() {
         return !this.state.loading ? this.state.user != null ? (
-            <div style={{ display: 'block' }}>
-                <SearchBox inputChange={this.inputChange} />
+            <div>
+                <div style={{ display: 'block' }}>
+                    <SearchBox inputChange={this.inputChange} />
 
-                <CardViewer
-                    clickMore={this.clickMore}
-                    limit={this.state.limit}
-                    recipes={this.state.recipes}
-                    query={this.state.input}
-                />
+                    <CardViewer
+                        clickMore={this.clickMore}
+                        limit={this.state.limit}
+                        recipes={this.state.recipes}
+                        query={this.state.input}
+                    />
+                </div>
             </div>
         ) : (
             <Login style={{ boxSizing: 'border-box' }} />
@@ -72,4 +75,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default Contents;
