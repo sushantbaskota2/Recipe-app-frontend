@@ -9,8 +9,6 @@ const config = {
 const auth = async () => {
     try {
         const user = await axios.get(`http://localhost:3000/users/me`, config);
-        console.log(user);
-
         return user;
     } catch (e) {
         return;

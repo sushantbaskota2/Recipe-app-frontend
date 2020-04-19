@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './css/Profile.css';
 import auth from '../auth';
+import faker from 'faker';
 const Profile = () => {
     const [ user, setUser ] = useState();
     useEffect(() => {
@@ -9,15 +10,12 @@ const Profile = () => {
             setUser(user);
         })();
     }, user);
+    const avatar = faker.image.avatar();
     if (user) {
         return (
             <div class='profilecontainer' style={{ marginTop: '15%' }}>
                 <div class='profile card'>
-                    <img
-                        class='profile image'
-                        src='https://images.unsplash.com/photo-1486044938437-01b06ad8098d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-                        alt='Profile'
-                    />
+                    <img class='profile image' src={avatar} alt='Profile' />
                     <p class='profile name'>{user.data.name}</p>
                     <p class='profile bio'>{user.data.email}</p>
 

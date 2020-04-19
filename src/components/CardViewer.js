@@ -2,40 +2,37 @@ import React from 'react';
 import Cards from './Cards';
 import { connect } from 'react-redux';
 
-const CardViewer = ({ recipes, clickMore, limit, search }) => {
+const CardViewer = ({ recipes, clickMore, limit, search, modal }) => {
     return (
         <section
             style={{
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'left',
-                marginTop: '10%',
+                marginTop: '1%',
                 position: 'absolute'
             }}
         >
-            {console.log(search)}
-            {search ? (
-                recipes.filter((rec) => rec.title.toLowerCase().includes(search)).map((recipe) => {
-                    return <Cards recipe={recipe} key={recipe._id} />;
-                })
-            ) : (
-                recipes.slice(0, limit).map((recipe) => {
-                    return <Cards recipe={recipe} key={recipe._id} />;
-                })
-            )}
+            {recipes.slice(0, limit).map((recipe) => {
+                return <Cards recipe={recipe} modal={modal} key={recipe._id} />;
+            })}
 
-            <div
-                className='arrowDiv'
-                onClick={() => {
-                    clickMore();
-                }}
-            >
-                <svg className='arrows'>
-                    <path className='a1' d='M0 0 L30 32 L60 0' />
-                    <path className='a2' d='M0 20 L30 52 L60 20' />
-                    <path className='a3' d='M0 40 L30 72 L60 40' />
-                </svg>
-            </div>
+            {recipes.length > limit ? (
+                <div
+                    className='arrowDiv'
+                    onClick={() => {
+                        clickMore();
+                    }}
+                >
+                    <svg className='arrows'>
+                        <path className='a1' d='M0 0 L30 32 L60 0' />
+                        <path className='a2' d='M0 20 L30 52 L60 20' />
+                        <path className='a3' d='M0 40 L30 72 L60 40' />
+                    </svg>
+                </div>
+            ) : (
+                ''
+            )}
         </section>
     );
 };

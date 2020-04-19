@@ -1,6 +1,5 @@
 import React from 'react';
 import '../SearchBox.css';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { setSearchData } from '../actions';
 class SearchBox extends React.Component {
@@ -13,7 +12,6 @@ class SearchBox extends React.Component {
 
     handleChange = (e) => {
         this.setState({ text: e.target.value });
-        this.props.inputChange(this.state.text);
         this.props.setSearchData(this.state.text);
     };
 

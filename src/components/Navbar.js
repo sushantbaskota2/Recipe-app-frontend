@@ -5,31 +5,33 @@ import auth from '../auth';
 import { Link } from 'react-router-dom';
 import history from '../history';
 
-const logout = async () => {
-    const token = localStorage.getItem('jwtToken');
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
-    console.log(token);
-
-    try {
-        const user = await axios.post('http://localhost:3000/users/logout', {}, config);
-        history.push('/logout');
-        console.log(user);
-    } catch (e) {
-        console.log(e);
-    }
-};
-
 const Navbar = () => {
-    const [ user, setUser ] = useState();
-    useEffect(() => {
-        (async () => {
-            const user = await auth();
-            setUser(user);
-        })();
-    }, user);
-    console.log(user);
+    const [ user, setUser ] = useState({});
+    useEffect(
+        () => {
+            (async () => {
+                const user = await auth();
+                setUser(user);
+            })();
+        },
+        [ user ]
+    );
+
+    const logout = async () => {
+        const token = localStorage.getItem('jwtToken');
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        console.log(token);
+
+        try {
+            const user = await axios.post('http://localhost:3000/users/logout', {}, config);
+            history.push('/login');
+            console.log(user);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
         <div className='header'>
@@ -37,7 +39,7 @@ const Navbar = () => {
                 <div id='logo' />
                 <ul className='nav'>
                     <li>
-                        <Link to='/'>Recipes</Link>
+                        <Link to='/recipes'>Recipes</Link>
                     </li>
                     {user ? (
                         <React.Fragment>

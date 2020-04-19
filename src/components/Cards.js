@@ -2,7 +2,7 @@ import React from 'react';
 import '../cards.scss';
 const Cards = (props) => {
     return (
-        <div className='wrapper'>
+        <div className='wrapper' onClick={() => props.modal(props.recipe)}>
             <div className='contain'>
                 <img
                     className='top'

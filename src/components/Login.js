@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Login.css';
 import axios from 'axios';
+import { setUser } from '../actions/index';
+import history from '../history';
 
 class Login extends React.Component {
     state = {
@@ -16,9 +19,10 @@ class Login extends React.Component {
             clicked: !this.state.clicked
         });
     };
-    login = async () => {
-        console.log('Thichyo');
 
+    login = async (e) => {
+        console.log('Thichyo');
+        e.preventDefault();
         try {
             const user = await axios.post('http://localhost:3000/users/login', {
                 email: this.state.email,
@@ -26,7 +30,8 @@ class Login extends React.Component {
             });
             if (user.status === 200) {
                 localStorage.setItem('jwtToken', user.data.token);
-                window.location.reload();
+                this.props.setUser(user);
+                history.push('/recipes');
             }
 
             console.log(user);
@@ -136,4 +141,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default connect(() => {}, { setUser })(Login);
