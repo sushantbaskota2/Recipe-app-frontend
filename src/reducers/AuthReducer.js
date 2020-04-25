@@ -1,9 +1,9 @@
-const INITIAL_STATE = null;
+const INITIAL_STATE = false;
 
 export default (state = INITIAL_STATE, { type, payload }) => {
     switch (type) {
-        case 'SET_USER':
-            return { ...state, ...payload };
+        case 'CHECK_AUTH':
+            return payload;
         default:
             return state;
     }

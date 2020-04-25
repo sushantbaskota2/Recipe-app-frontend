@@ -8,6 +8,7 @@ const CardViewer = ({ recipes, clickMore, limit, search, modal }) => {
             style={{
                 display: 'flex',
                 flexWrap: 'wrap',
+                float: 'left',
                 justifyContent: 'left',
                 marginTop: '1%',
                 position: 'absolute'

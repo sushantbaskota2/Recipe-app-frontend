@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/Modal.scss';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
 // const Modal = (props) => {
 // return ReactDOM.createPortal(
 //         <div
@@ -15,8 +17,16 @@ import ReactDOM from 'react-dom';
 //     );
 // };
 
-const Modal = ({ recipe, modalDismiss }) => {
+const Modal = ({ recipe, modalDismiss, user }) => {
     console.log(recipe);
+    const [ favs, setFavs ] = useState(false);
+
+    useEffect(
+        () => {
+            return () => {};
+        },
+        [ favs ]
+    );
 
     return ReactDOM.createPortal(
         <div
@@ -29,17 +39,46 @@ const Modal = ({ recipe, modalDismiss }) => {
         >
             <div onClick={(e) => e.stopPropagation()} className='recipe-card'>
                 <aside>
-                    <img src={recipe.image} alt='Chai Oatmeal' />
+                    <img src={recipe.image} alt={recipe.title} />
 
-                    <a href='#' class='button'>
-                        <span class='icon icon-play' />
+                    <a
+                        href='#'
+                        onClick={async () => {
+                            if (favs || user.favorites.includes(recipe._id)) {
+                                await axios.delete(`http://localhost:3000/users/favorites/${recipe._id}`, {
+                                    headers: {
+                                        Authorization: `Bearer ${user.token}`
+                                    }
+                                });
+                                setFavs(false);
+                                return;
+                            } else {
+                                await axios.post(
+                                    'http://localhost:3000/users/favorites',
+                                    { recipeID: recipe._id },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${user.token}`
+                                        }
+                                    }
+                                );
+                                setFavs(true);
+                                console.log('bhayo');
+                            }
+                        }}
+                        class='button'
+                    >
+                        {user.favorites.includes(recipe._id) || favs ? (
+                            <span class='fas fa-heart ' />
+                        ) : (
+                            <span className='far fa-heart ' />
+                        )}
                     </a>
                 </aside>
 
                 <article>
                     <h2>{recipe.title}</h2>
                     <h3>Serving Size: {recipe.servings}</h3>
-
                     <ul>
                         <li>
                             <span class='icon icon-users' />
@@ -47,32 +86,40 @@ const Modal = ({ recipe, modalDismiss }) => {
                         </li>
                         <li>
                             <span class='icon icon-clock' />
-                            <span>15 min</span>
+                            <span>{recipe.readyInMinutes} min</span>
                         </li>
-                        <li>
-                            <span class='icon icon-level' />
-                            <span>Beginner level</span>
-                        </li>
+
                         <li>
                             <span class='icon icon-calories' />
                             <span>{recipe.nutrients.calories}</span>
                         </li>
                     </ul>
+
                     <ul className='restrictions'>
                         {Object.keys(recipe.restrictions)
                             .filter((res) => recipe.restrictions[res] === true)
                             .map((res) => <li>{res}</li>)}
                     </ul>
-
                     <p>
-                        For an extra thick and creamy bowl, add oat bran. It'll make for a hearty helping and also add
-                        more fiber to your meal. If you love the taste of chai, you'll enjoy this spiced version with
-                        coriander, cinnamon, and turmeric.
+                        <ul class='ingredients restrictions' style={{ marginTop: 0 }}>
+                            Ingredients:
+                            {recipe.extendedIngredients.map((res) => (
+                                <li
+                                    style={{
+                                        backgroundColor: 'white',
+                                        color: 'black',
+                                        marginTop: '10px',
+                                        fontSize: '10px'
+                                    }}
+                                >
+                                    {res.name}
+                                </li>
+                            ))}
+                        </ul>
                     </p>
-
-                    <p class='ingredients'>
-                        <span>Ingredients:&nbsp;</span>Milk, salt, coriander, cardamom, cinnamon, turmeric, honey,
-                        vanilla extract, regular oats, oat bran.
+                    <p>
+                        <h3>Directions:</h3> <br />
+                        {recipe.instructions.replace(/(<([^>]+)>)/gi, '').trim()}
                     </p>
                 </article>
             </div>
@@ -80,4 +127,8 @@ const Modal = ({ recipe, modalDismiss }) => {
         document.querySelector('#modal')
     );
 };
-export default Modal;
+
+const mapStateToProps = (state) => {
+    return { user: state.user };
+};
+export default connect(mapStateToProps)(Modal);

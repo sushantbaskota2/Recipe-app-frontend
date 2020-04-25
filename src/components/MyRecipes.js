@@ -7,7 +7,7 @@ import Cards from './Cards';
 import Loading from './Loading';
 import auth from '../auth';
 
-class Favorites extends React.Component {
+class MyRecipes extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -25,21 +25,20 @@ class Favorites extends React.Component {
         if (user) {
             console.log(user);
 
-            const favorites = await axios.get(`http://localhost:3000/users/favorites/`, {
+            const favorites = await axios.get(`http://localhost:3000/users/recipes/`, {
                 headers: {
                     Authorization: `Bearer ${user.data.token}`
                 }
             });
-            if (favorites.error) {
-            }
             this.setState({ user: user.data, loading: false, favorites: favorites.data });
         } else {
             history.push('/login');
         }
     }
+
     async componentDidUpdate() {
         if (this.state.user) {
-            const favorites = await axios.get(`http://localhost:3000/users/favorites/`, {
+            const favorites = await axios.get(`http://localhost:3000/users/recipes/`, {
                 headers: {
                     Authorization: `Bearer ${this.state.user.token}`
                 }
@@ -64,7 +63,7 @@ class Favorites extends React.Component {
     //             }
     //             console.log(favorites);
 
-    //             setFavorites(favorites);
+    //             setMyRecipes(favorites);
     //         })(user.token);
     //     },
     //     [ favorites, user ]
@@ -74,18 +73,36 @@ class Favorites extends React.Component {
             return <Loading />;
         } else if (this.state.favorites.length <= 0) {
             return (
-                <div style={{ marginTop: '5%' }}>
-                    <h2>Favorites</h2>
+                <div style={{ marginTop: '10%', display: 'block' }}>
+                    <h2>MyRecipes</h2>
                     No favorite Recipes.
+                    <button
+                        onClick={(e) => {
+                            history.push('/user/recipes/add');
+                        }}
+                        style={{ position: 'relative' }}
+                    >
+                        {' '}
+                        Add Recipes
+                    </button>
                 </div>
             );
         } else {
             console.log(this.state.favorites);
 
             return (
-                <div style={{ marginTop: '10%' }}>
-                    <h2>Favorites</h2>
-                    <div style={{ display: 'flex', float: 'left', flexWrap: 'wrap', justifyContent: 'left' }}>
+                <div style={{ marginTop: '10%', display: 'block' }}>
+                    <h2>My Recipes</h2>
+                    <button
+                        onClick={(e) => {
+                            history.push('/user/recipes/add');
+                        }}
+                        style={{ position: 'absolute', justifyContent: 'left' }}
+                    >
+                        {' '}
+                        Add Recipes
+                    </button>
+                    <div style={{ display: 'flex', float: 'left' }}>
                         {this.state.favorites.map((recipe) => {
                             return (
                                 <Cards
@@ -93,15 +110,15 @@ class Favorites extends React.Component {
                                     modal={(recipe) => {
                                         this.setState({ activeRecipe: recipe, modal: true });
                                     }}
+                                    delete
                                     deleteFav={async (id) => {
-                                        await axios.delete(`http://localhost:3000/users/favorites/${id}`, {
+                                        await axios.delete(`http://localhost:3000/users/recipes/${id}`, {
                                             headers: {
                                                 Authorization: `Bearer ${this.state.user.token}`
                                             }
                                         });
                                         this.setState({ loading: true });
                                     }}
-                                    delete
                                     key={recipe._id}
                                 />
                             );
@@ -127,4 +144,4 @@ const mapStateToProps = (state) => {
     return { user: state.user };
 };
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps)(MyRecipes);

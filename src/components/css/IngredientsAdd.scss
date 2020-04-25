@@ -1,0 +1,66 @@
+$melon: #f97d75;
+$black: #2e3641;
+
+.ingForm {
+    margin-top: 100px;
+    display: block;
+    background-color: unset;
+    text-align: left;
+}
+
+.inginput {
+    border: 0;
+    margin-right: 5px;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 150px;
+    padding: 8px;
+    transition: all .3s ease;
+
+    &:focus,
+    &:active {
+        outline: 0;
+        width: 300px;
+        border-bottom-color: $melon;
+    }
+}
+
+.ingbutton {
+    background-color: $melon;
+    border: 0;
+    padding: 8px 20px;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:focus,
+    &:active {
+        outline: 0;
+    }
+}
+
+.ingul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 25px;
+}
+
+.ingli {
+    border: 1px solid black;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+.fa-close {
+    cursor: pointer;
+}
+
+[contenteditable] {
+    &:focus,
+    &:active {
+        outline: 0;
+    }
+}

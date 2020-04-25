@@ -21,8 +21,21 @@ const Cards = (props) => {
                             <h1>{props.recipe.title}</h1>
                             <p />
                         </div>
-                        <div className='buy' style={{ paddingTop: '25px', paddingLeft: '10px' }}>
-                            {props.recipe.readyInMinutes} min
+                        <div
+                            className='buy'
+                            style={props.delete ? { paddingTop: '10px' } : { paddingTop: '25px', paddingLeft: '10px' }}
+                        >
+                            {props.delete ? (
+                                <i
+                                    className='fas fa-trash-alt'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        props.deleteFav(props.recipe._id);
+                                    }}
+                                />
+                            ) : (
+                                props.recipe.readyInMinutes + ' min'
+                            )}
                         </div>
                     </div>
                     <div className='right'>
@@ -41,7 +54,7 @@ const Cards = (props) => {
             </div>
             <div className='inside'>
                 <div className='icon'>
-                    <i class='material-icons'>add_shopping_cart</i>
+                    <i class='fas fa-info-circle' />
                 </div>
                 <div className='contents' style={{ display: 'block', marginTop: '20px' }}>
                     <div>

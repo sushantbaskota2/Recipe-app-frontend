@@ -39,14 +39,16 @@ img {
                 position: absolute;
                 top: 80%;
                 right: 3%;
-                width: 5em;
-                height: 5em;
-                border-radius: 65em;
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
                 line-height: 5em;
                 text-align: center;
 
-                .icon {
+                span {
                     vertical-align: middle;
+                    font-size: 25px;
+                    margin-bottom: 25px;
                 }
             }
         }

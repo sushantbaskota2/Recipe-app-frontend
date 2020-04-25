@@ -30,8 +30,9 @@ class Login extends React.Component {
             });
             if (user.status === 200) {
                 localStorage.setItem('jwtToken', user.data.token);
-                this.props.setUser(user);
+                this.props.setUser();
                 history.push('/recipes');
+                window.location.reload();
             }
 
             console.log(user);
@@ -47,6 +48,7 @@ class Login extends React.Component {
                 password: this.state.password
             });
             if (user) {
+                console.log(user);
             }
         } catch (e) {
             console.log(e);
@@ -69,7 +71,7 @@ class Login extends React.Component {
                 <h2>Welcome to our recipe app!</h2>
                 <div className={`login-container ${this.state.clicked ? 'right-panel-active' : ''}`} id='container'>
                     <div className='form-container sign-up-container'>
-                        <form action='#'>
+                        <form action='#' className='login-form'>
                             <h1>Create Account</h1>
 
                             <span>Use your email for registration</span>
@@ -95,7 +97,7 @@ class Login extends React.Component {
                         </form>
                     </div>
                     <div className='form-container sign-in-container'>
-                        <form action='#'>
+                        <form className='login-form' action='#'>
                             <h1>Sign in</h1>
 
                             <span>Use your email for registration</span>
@@ -141,4 +143,4 @@ class Login extends React.Component {
     }
 }
 
-export default connect(() => {}, { setUser })(Login);
+export default connect(null, { setUser })(Login);

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     vegetarian: false,
     pescatarian: false,
     healthy: false,
-    dairyFree: false
+    dairyFree: false,
+    cost: 0
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {

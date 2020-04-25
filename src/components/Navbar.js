@@ -4,8 +4,11 @@ import axios from 'axios';
 import auth from '../auth';
 import { Link } from 'react-router-dom';
 import history from '../history';
+import Avatar from './Avatar';
+import { connect } from 'react-redux';
+import { setUser } from '../actions';
 
-const Navbar = () => {
+const Navbar = (props) => {
     const [ user, setUser ] = useState({});
     useEffect(
         () => {
@@ -14,7 +17,7 @@ const Navbar = () => {
                 setUser(user);
             })();
         },
-        [ user ]
+        [ props.user ]
     );
 
     const logout = async () => {
@@ -27,7 +30,7 @@ const Navbar = () => {
         try {
             const user = await axios.post('http://localhost:3000/users/logout', {}, config);
             history.push('/login');
-            console.log(user);
+            window.location.reload();
         } catch (e) {
             console.log(e);
         }
@@ -36,16 +39,29 @@ const Navbar = () => {
     return (
         <div className='header'>
             <div className='nav-container'>
-                <div id='logo' />
+                <div id='logo'>
+                    <h1 className='titleSpan'>Food at Home</h1>
+                </div>
                 <ul className='nav'>
                     <li>
                         <Link to='/recipes'>Recipes</Link>
                     </li>
-                    {user ? (
+
+                    {props.user ? (
                         <React.Fragment>
                             <li>
-                                <Link to='/profile'>Profile</Link>
+                                <Link to='/user/recipes'>My Recipes</Link>
                             </li>
+                            <li>
+                                <Link to='/user/favorites'>Favorites</Link>
+                            </li>
+                            <li>
+                                <Link to='/user/fridge'>My Fridge</Link>
+                            </li>
+                            <li>
+                                <Avatar />
+                            </li>
+
                             <li>
                                 <button onClick={logout}>Logout</button>
                             </li>
@@ -59,4 +75,8 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+    return { user: state.user };
+};
+
+export default connect(mapStateToProps, { setUser })(Navbar);

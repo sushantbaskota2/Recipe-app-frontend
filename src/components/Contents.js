@@ -28,6 +28,7 @@ class Contents extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.user);
         console.log(this.props.search);
         let recipes = null;
         let first = false;
@@ -82,7 +83,6 @@ class Contents extends React.Component {
                     case 'vegan':
                         finalRecipes = finalRecipes.filter((recipe) => recipe.restrictions.vegan);
                         console.log(finalRecipes);
-
                         break;
                     case 'vegetarian':
                         finalRecipes = finalRecipes.filter((recipe) => recipe.restrictions.vegetarian);
@@ -99,9 +99,14 @@ class Contents extends React.Component {
                     case 'pescatarian':
                         finalRecipes = finalRecipes.filter((recipe) => recipe.diets.includes('pescatarian'));
                         break;
+
                     default:
                         break;
                 }
+            }
+
+            if (filters['cost'] > 9) {
+                finalRecipes = finalRecipes.filter((rec) => rec.pricePerServing / 10 < filters['cost']);
             }
         });
         console.log(finalRecipes);
@@ -109,7 +114,7 @@ class Contents extends React.Component {
         return finalRecipes;
     };
 
-    filterContents = (filter) => {
+    filterContents = (filter, cost) => {
         const filters = this.props.filters;
         switch (filter) {
             case 'VEGETARIAN':
@@ -130,6 +135,8 @@ class Contents extends React.Component {
             case 'GLUTENFREE':
                 this.props.setFilterData({ ...filters, gluten: !filters.gluten });
                 break;
+            case 'COST':
+                this.props.setFilterData({ ...filters, cost: cost });
             default:
                 break;
         }
@@ -178,7 +185,9 @@ class Contents extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { search: state.search, filters: state.filters };
+    console.log(state);
+
+    return { search: state.search, filters: state.filters, user: state.user };
 };
 
 export default connect(mapStateToProps, { setFilterData })(Contents);

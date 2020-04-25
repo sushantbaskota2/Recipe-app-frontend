@@ -1,7 +1,7 @@
 .totalFilter {
     margin-top: 150px;
-    width: 50%;
-    margin-left: 25%;
+    width: 60%;
+    margin-left: 20%;
 }
 
 .search-filters.type-pens {
@@ -18,6 +18,14 @@
     width: 100%;
 }
 
+.search-results-tabs-cost {
+    background: #2c303a;
+    padding: 10px;
+    margin: 0;
+    border-top: 5px solid #aaaebc;
+    border-top-color: rgb(170, 174, 188);
+    width: fit-content;
+}
 .search-filters {
     text-align: center;
 }
