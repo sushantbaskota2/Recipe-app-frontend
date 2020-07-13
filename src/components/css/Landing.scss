@@ -1,0 +1,32 @@
+.landinghero {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+    background-image: url(https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/NFOJ7HCOWQI6VFT34B2NGAWH2Q.jpg&w=916);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    span {
+        font-size: 100px;
+        text-shadow: 10px 10px 10px black;
+        color: white;
+    }
+
+    button {
+        height: 50px;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    * {
+        align-self: center;
+
+
+    }
+}

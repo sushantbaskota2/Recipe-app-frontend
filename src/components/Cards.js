@@ -1,14 +1,17 @@
 import React from 'react';
 import '../cards.scss';
+import history from '../history';
 const Cards = (props) => {
     return (
-        <div className='wrapper'>
+        <div className='wrapper' onClick={() => props.modal(props.recipe)}>
             <div className='contain'>
                 <img
                     className='top'
                     src={
-                        props.recipe.image ? (
+                        props.recipe.image ? props.recipe.image.includes('spoonacular') ? (
                             props.recipe.image
+                        ) : (
+                            `data:image/jpeg;base64${props.recipe.image}`
                         ) : (
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSwQ7snur7LQOKIbAhBBfjZ0BBFxdtORvRXz8Ed0s_gwK3ssiPu'
                         )
@@ -19,10 +22,39 @@ const Cards = (props) => {
                     <div className='left'>
                         <div className='details' style={{ display: 'flex' }}>
                             <h1>{props.recipe.title}</h1>
-                            <p />
+                            <p style={{ float: 'right' }}>
+                                {' '}
+                                {props.edit ? (
+                                    <i
+                                        style={{ textAlign: 'right' }}
+                                        className='fas fa-edit'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            history.push(`/user/recipes/edit/${props.recipe._id}`);
+                                        }}
+                                    />
+                                ) : (
+                                    ''
+                                )}
+                            </p>
                         </div>
-                        <div className='buy' style={{ paddingTop: '25px', paddingLeft: '10px' }}>
-                            {props.recipe.readyInMinutes} min
+                        <div
+                            className='buy'
+                            style={props.delete ? { paddingTop: '10px' } : { paddingTop: '25px', paddingLeft: '10px' }}
+                        >
+                            {props.delete ? (
+                                <React.Fragment>
+                                    <i
+                                        className='fas fa-trash-alt'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            props.deleteFav(props.recipe._id);
+                                        }}
+                                    />
+                                </React.Fragment>
+                            ) : (
+                                props.recipe.readyInMinutes + ' min'
+                            )}
                         </div>
                     </div>
                     <div className='right'>
@@ -41,7 +73,7 @@ const Cards = (props) => {
             </div>
             <div className='inside'>
                 <div className='icon'>
-                    <i class='material-icons'>add_shopping_cart</i>
+                    <i class='fas fa-info-circle' />
                 </div>
                 <div className='contents' style={{ display: 'block', marginTop: '20px' }}>
                     <div>

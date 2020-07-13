@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
@@ -32,6 +40,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -45,6 +54,7 @@
     margin-left: 50%;
     cursor: pointer;
 }
+
 .arrows {
     width: 60px;
     height: 72px;
@@ -55,7 +65,7 @@
 }
 
 .arrows path {
-    stroke: #e84118;
+    stroke: rgb(232, 65, 23);
     fill: transparent;
     stroke-width: 2px;
     animation: arrow 2s infinite;
@@ -66,12 +76,15 @@
     0% {
         opacity: 0;
     }
+
     40% {
         opacity: 1;
     }
+
     80% {
         opacity: 0;
     }
+
     100% {
         opacity: 0;
     }
@@ -81,12 +94,15 @@
     0% {
         opacity: 0;
     }
+
     40% {
         opacity: 1;
     }
+
     80% {
         opacity: 0;
     }
+
     100% {
         opacity: 0;
     }
@@ -94,15 +110,18 @@
 
 .arrows path.a1 {
     animation-delay: -1s;
-    -webkit-animation-delay: -1s; /* Safari 和 Chrome */
+    -webkit-animation-delay: -1s;
+    /* Safari 和 Chrome */
 }
 
 .arrows path.a2 {
     animation-delay: -0.5s;
-    -webkit-animation-delay: -0.5s; /* Safari 和 Chrome */
+    -webkit-animation-delay: -0.5s;
+    /* Safari 和 Chrome */
 }
 
 .arrows path.a3 {
     animation-delay: 0s;
-    -webkit-animation-delay: 0s; /* Safari 和 Chrome */
+    -webkit-animation-delay: 0s;
+    /* Safari 和 Chrome */
 }

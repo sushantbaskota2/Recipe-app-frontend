@@ -1,0 +1,93 @@
+.totalFilter {
+    margin-top: 150px;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.search-filters.type-pens {
+    border-color: #e84118;
+    border-radius: 35px;
+}
+
+.search-results-tabs {
+    background: #2c303a;
+    padding: 10px;
+    margin: 0;
+    border-top: 5px solid #aaaebc;
+    border-top-color: rgb(170, 174, 188);
+    width: 100%;
+}
+
+.search-results-tabs-cost {
+    background: #2c303a;
+    padding: 10px;
+    margin: 0;
+    border-top: 5px solid #aaaebc;
+    border-top-color: rgb(170, 174, 188);
+    width: fit-content;
+}
+.search-filters {
+    text-align: center;
+}
+
+.search-filters .search-filter {
+    cursor: pointer;
+    background: #1e1f26;
+    padding: 0.5rem 0.75rem;
+    color: #9b9dad;
+    line-height: 1;
+    -webkit-transition: 0.2s ease background;
+    transition: 0.2s ease background;
+}
+
+.search-filters .search-filter:hover {
+    cursor: pointer;
+    background: #e84118;
+    padding: 0.5rem 0.75rem;
+    color: #000;
+    line-height: 1;
+    -webkit-transition: 0.2s ease background;
+    transition: 0.2s ease background;
+}
+
+.search-filters .search-filter-active {
+    cursor: pointer;
+    background: #e84118;
+    padding: 0.5rem 0.75rem;
+    color: #000;
+    line-height: 1;
+    -webkit-transition: 0.2s ease background;
+    transition: 0.2s ease background;
+}
+
+.explore-tabs a,
+.explore-tabs span {
+    font-size: 1.1rem;
+    display: inline-block;
+    color: #9b9dad;
+    padding: 3px 14px 5px 0;
+}
+
+.button,
+.file-upload-button,
+.gsc-cursor-page {
+    font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+    -webkit-appearance: none;
+    font-size: 1rem;
+    text-shadow: none;
+    line-height: 1.2;
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 0 10px 0 0;
+    position: relative;
+    border-radius: 25px;
+    border: 3px solid transparent;
+    background: #444857;
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none !important;
+    text-align: center;
+    font-weight: normal !important;
+}

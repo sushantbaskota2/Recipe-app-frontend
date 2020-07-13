@@ -1,0 +1,111 @@
+.ing-container {
+    display: flex;
+    min-height: 250px;
+    padding: 10px;
+    margin-top: 10%;
+    margin-left: 15%;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+    width: 1000px;
+    font-family: 'Lato', sans-serif;
+}
+.ing-store,
+.ing-fridge,
+.results {
+    min-width: 500px;
+    height: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.results {
+    width: 350px;
+}
+.controls {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.controls .remove-all {
+    height: 1.5em;
+    width: 1.5em;
+    position: relative;
+    transform: rotate(180deg);
+    font-size: 1.4em;
+    color: #fff;
+    background: #8bdbcb;
+    border-radius: 50%;
+}
+.remove-all:after {
+    content: '⨠';
+    position: absolute;
+    right: 4px;
+    top: 1px;
+}
+
+.title {
+    margin: 10px;
+    text-align: center;
+    font-size: 1.3em;
+}
+.ing-content {
+    background: rgba(232, 65, 24, 0.75);
+    min-height: 80%;
+    margin: 10px;
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding: 7px 7px 2px 7px;
+}
+.results .ing-content {
+    background: #fff;
+    border: 1px solid #8bdbcb;
+}
+.item {
+    background: #fff;
+    padding: 6px 10px;
+    min-height: 1.1em;
+    position: relative;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.results .item {
+    background: #8bdbcb;
+    cursor: auto;
+}
+.item .move {
+    right: 0px;
+    height: 1em;
+    width: 2em;
+    color: #aaa;
+}
+.item .move:after {
+    content: '⋀';
+    position: absolute;
+    right: 10px;
+    transform: rotate(90deg);
+}
+.ing-fridge .move:after {
+    transform: rotate(-90deg);
+}
+
+.item .time,
+.item .ings {
+    font-size: 0.8em;
+}
+.item .time span:nth-child(n + 2):before {
+    content: " • ";
+}
+
+.item .ings {
+    margin-top: 2px;
+    display: flex;
+}
+.item .ings span {
+    background: #fff;
+    padding: 1px 3px;
+    margin-right: 5px;
+}

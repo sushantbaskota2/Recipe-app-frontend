@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../axios';
 
 const token = localStorage.getItem('jwtToken');
 
@@ -8,9 +8,8 @@ const config = {
 
 const auth = async () => {
     try {
-        const user = await axios.get(`http://localhost:3000/users/me`, config);
-        console.log(user);
-
+        const user = await axios.get(`/users/me`, config);
+        user.data.token = token;
         return user;
     } catch (e) {
         return;
