@@ -4,7 +4,7 @@ import { setUser } from '../actions/index';
 import auth from '../auth/index';
 import Loading from './Loading';
 import Avatar from './Avatar';
-import axios from 'axios';
+import axios from '../axios';
 import { connect } from 'react-redux';
 
 class EditProfile extends React.Component {
@@ -18,7 +18,7 @@ class EditProfile extends React.Component {
         console.log(data);
 
         if (data) {
-            const { dataA } = await axios.get('http://localhost:3000/users/me/avatar', {
+            const { dataA } = await axios.get('/users/me/avatar', {
                 headers: {
                     Authorization: `Bearer ${data.token}`
                 }

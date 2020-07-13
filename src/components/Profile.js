@@ -3,7 +3,7 @@ import './css/Profile.css';
 import auth from '../auth';
 import { Link } from 'react-router-dom';
 import faker from 'faker';
-import axios from 'axios';
+import axios from '../axios';
 import { connect } from 'react-redux';
 const Profile = () => {
     const [ user, setUser ] = useState();
@@ -15,7 +15,7 @@ const Profile = () => {
             (async () => {
                 const { data } = await auth();
                 setUser(data);
-                const res = await axios.get(`http://localhost:3000/users/me/avatar`, {
+                const res = await axios.get(`/users/me/avatar`, {
                     headers: {
                         Authorization: `Bearer ${data.token}`
                     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from '../axios';
 import './App.css';
 import CardViewer from './CardViewer';
 import Loading from './Loading';
@@ -34,7 +34,7 @@ class Contents extends React.Component {
         let first = false;
         const user = await auth();
         this.setState({ user });
-        recipes = await axios.get('http://localhost:3000/recipes');
+        recipes = await axios.get('/recipes');
         this.setState({ recipes: recipes.data.filter((rec) => rec.title.toLowerCase().includes(this.props.search)) });
 
         Object.keys(this.props.filters).map((key) => {
@@ -106,7 +106,7 @@ class Contents extends React.Component {
             }
 
             if (filters['cost'] > 9) {
-                finalRecipes = finalRecipes.filter((rec) => rec.pricePerServing / 10 < filters['cost']);
+                finalRecipes = finalRecipes.filter((rec) => rec.pricePerServing / 5 < filters['cost']);
             }
         });
         console.log(finalRecipes);

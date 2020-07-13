@@ -46,7 +46,7 @@ const Filter = ({ filterContents, filters }) => {
                     onClick={() => {
                         setCost(!cost);
                     }}
-                    class={`button button-medium search-filter ${filters.pescatarian ? 'search-filter-active' : ''}`}
+                    class={`button button-medium search-filter ${cost ? 'search-filter-active' : ''}`}
                 >
                     Cost
                 </a>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './css/Avatar.css';
 import { connect } from 'react-redux';
 import history from '../history';
-import axios from 'axios';
+import axios from '../axios';
 import auth from '../auth';
 import { setUser } from '../actions/';
 
@@ -19,7 +19,7 @@ const Avatar = (props) => {
 
         formData.append('avatar', file, file.name);
 
-        const { data } = await axios.post('http://localhost:3000/users/me/avatar', formData, {
+        const { data } = await axios.post('/users/me/avatar', formData, {
             headers: {
                 Authorization: `Bearer ${props.user.token}`
             }
@@ -36,7 +36,7 @@ const Avatar = (props) => {
                 if (!props.user.token) {
                     return;
                 }
-                const res = await axios.get(`http://localhost:3000/users/me/avatar`, {
+                const res = await axios.get(`/users/me/avatar`, {
                     headers: {
                         Authorization: `Bearer ${props.user.token}`
                     }

@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import IngredientsAdd from './IngredientsAdd';
 import './css/fridge.css';
 import './css/fridge.scss';
-import axios from 'axios';
+import axios from '../axios';
 import Loading from './Loading';
 class Fridge extends React.Component {
     state = { fridge: [], loading: true, ingName: '', token: '' };
 
     async componentDidMount() {
         const token = await localStorage.getItem('jwtToken');
+
         this.setState({ token });
-        const fridge = await axios.get('http://localhost:3000/users/fridge', {
+        const fridge = await axios.get('/users/fridge', {
             headers: {
                 Authorization: `Bearer ${this.state.token}`
             }

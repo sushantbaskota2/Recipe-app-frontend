@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './css/AddRecipes.scss';
-import axios from 'axios';
+import axios from '../axios';
 import { connect } from 'react-redux';
 import history from '../history';
 const AddRecipes = (props) => {
+    const [ edit, setEdit ] = useState(true);
     const [ title, setTitle ] = useState('');
     const [ summary, setSummary ] = useState('');
     const [ servings, setServings ] = useState('');
@@ -27,6 +28,29 @@ const AddRecipes = (props) => {
     const [ readyInMinutes, setReadyInMinutes ] = useState('');
     const [ file, setFile ] = useState(null);
     const [ image, setImage ] = useState('');
+    const dotheTing = async () => {
+        const recipe = await axios.get(`/recipes/${props.match.params.id}`);
+        console.log(recipe.data);
+        setTitle(recipe.data.title);
+        setIngredients(recipe.data.extendedIngredients);
+        setSummary(recipe.data.summary);
+        setServings(recipe.data.servings);
+        let cuzin = '';
+        recipe.data.cuisines.map((cu) => {
+            if ((cuzin = '')) {
+                cuzin = cu;
+            } else {
+                cuzin = cu + ', ' + cuzin;
+            }
+        });
+        setCuisines(cuzin);
+        setReadyInMinutes(recipe.data.readyInMinutes);
+        setImage(recipe.data.image);
+        setPricePerServing(recipe.data.pricePerServing);
+        setRestrictions(recipe.data.restrictions);
+        setInstructions(recipe.data.instructions);
+        setNutrients(recipe.data.nutrients);
+    };
 
     const formSubmit = async (e) => {
         e.preventDefault();
@@ -41,10 +65,16 @@ const AddRecipes = (props) => {
             extendedIngredients,
             nutrients,
             restrictions,
-            instructions
+            instructions,
+            image
         };
 
-        axios.post('http://localhost:3000/users/recipes', hero, {
+        if (props.match.params.id) {
+            hero['_id'] = props.match.params.id;
+        }
+        console.log(hero);
+
+        axios.post('/users/recipes', hero, {
             headers: {
                 Authorization: `Bearer ${props.user.token}`
             }
@@ -55,11 +85,17 @@ const AddRecipes = (props) => {
 
     useEffect(
         () => {
+            if (edit) {
+                if (props.match.params.id) {
+                    dotheTing();
+                    setEdit(false);
+                }
+            }
             console.log(extendedIngredients);
 
             return () => {};
         },
-        [ extendedIngredients ]
+        [ extendedIngredients, image ]
     );
     const getBase64 = async (file) => {
         var reader = new FileReader();
@@ -302,6 +338,7 @@ const AddRecipes = (props) => {
                                             <textarea
                                                 className='editRtextarea'
                                                 type='text'
+                                                value={instructions}
                                                 required
                                                 onChange={(e) => setInstructions(e.target.value)}
                                             />
@@ -425,7 +462,35 @@ const AddRecipes = (props) => {
                                         </div>
                                     </fieldset>
                                 </li>
-                                <li className='editli' />
+                                <li className='editli'>
+                                    <div class={`file-upload ${file ? 'active' : ''}`}>
+                                        <h2>Recipe Image</h2>
+                                        <div class='file-select'>
+                                            <div class='file-select-button' id='fileName'>
+                                                Choose File
+                                            </div>
+                                            <div class='file-select-name' id='noFile'>
+                                                {file ? file.name : 'No file chosen...'}
+                                            </div>
+                                            <input
+                                                type='file'
+                                                name='chooseFile'
+                                                id='chooseFile'
+                                                onChange={async (e) => {
+                                                    e.preventDefault();
+                                                    let file = e.target.files[0];
+                                                    let reader = new FileReader();
+                                                    reader.readAsDataURL(file);
+                                                    reader.onloadend = () => {
+                                                        setFile(file);
+                                                        setImage(reader.result);
+                                                    };
+                                                }}
+                                            />
+                                        </div>
+                                        {image ? <img src={`${image.toString()}`} /> : ''}
+                                    </div>
+                                </li>
                                 <li className='editli'>
                                     <fieldset className='material-button center'>
                                         <div>
@@ -447,26 +512,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {})(AddRecipes);
-
-//  <div class={`file-upload ${file ? 'active' : ''}`}>
-//                                         <h2>Recipe Image</h2>
-//                                         <div class='file-select'>
-//                                             <div class='file-select-button' id='fileName'>
-//                                                 Choose File
-//                                             </div>
-//                                             <div class='file-select-name' id='noFile'>
-//                                                 {file ? file.name : 'No file chosen...'}
-//                                             </div>
-//                                             <input
-//                                                 type='file'
-//                                                 name='chooseFile'
-//                                                 id='chooseFile'
-//                                                 onChange={(e) => {
-//                                                     setFile(e.target.files[0]);
-//                                                     setImage(getBase64(e.target.files[0]));
-//                                                     console.log(image);
-//                                                 }}
-//                                             />
-//                                         </div>
-//                                         {image ? <img src={`${image.toString()}`} /> : ''}
-//                                     </div>

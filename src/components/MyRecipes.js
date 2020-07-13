@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from '../axios';
 import history from '../history';
 import Modal from './Modal';
 import Cards from './Cards';
@@ -25,7 +25,7 @@ class MyRecipes extends React.Component {
         if (user) {
             console.log(user);
 
-            const favorites = await axios.get(`http://localhost:3000/users/recipes/`, {
+            const favorites = await axios.get(`/users/recipes/`, {
                 headers: {
                     Authorization: `Bearer ${user.data.token}`
                 }
@@ -38,7 +38,7 @@ class MyRecipes extends React.Component {
 
     async componentDidUpdate() {
         if (this.state.user) {
-            const favorites = await axios.get(`http://localhost:3000/users/recipes/`, {
+            const favorites = await axios.get(`/users/recipes/`, {
                 headers: {
                     Authorization: `Bearer ${this.state.user.token}`
                 }
@@ -111,8 +111,9 @@ class MyRecipes extends React.Component {
                                         this.setState({ activeRecipe: recipe, modal: true });
                                     }}
                                     delete
+                                    edit
                                     deleteFav={async (id) => {
-                                        await axios.delete(`http://localhost:3000/users/recipes/${id}`, {
+                                        await axios.delete(`/users/recipes/${id}`, {
                                             headers: {
                                                 Authorization: `Bearer ${this.state.user.token}`
                                             }

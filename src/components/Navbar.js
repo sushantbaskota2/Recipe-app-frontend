@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './css/Nav.css';
-import axios from 'axios';
+import axios from '../axios';
 import auth from '../auth';
 import { Link } from 'react-router-dom';
 import history from '../history';
@@ -28,7 +28,7 @@ const Navbar = (props) => {
         console.log(token);
 
         try {
-            const user = await axios.post('http://localhost:3000/users/logout', {}, config);
+            const user = await axios.post('/users/logout', {}, config);
             history.push('/login');
             window.location.reload();
         } catch (e) {
@@ -40,7 +40,14 @@ const Navbar = (props) => {
         <div className='header'>
             <div className='nav-container'>
                 <div id='logo'>
-                    <h1 className='titleSpan'>Food at Home</h1>
+                    <h1
+                        className='titleSpan'
+                        onClick={() => {
+                            history.push('/');
+                        }}
+                    >
+                        Food at Home
+                    </h1>
                 </div>
                 <ul className='nav'>
                     <li>
@@ -67,7 +74,9 @@ const Navbar = (props) => {
                             </li>
                         </React.Fragment>
                     ) : (
-                        ''
+                        <li>
+                            <Link to='/login'>Login</Link>
+                        </li>
                     )}
                 </ul>
             </div>

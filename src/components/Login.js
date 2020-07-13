@@ -1,16 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './Login.css';
-import axios from 'axios';
+import axios from '../axios';
 import { setUser } from '../actions/index';
 import history from '../history';
+import Alert from './Alert';
 
 class Login extends React.Component {
     state = {
         clicked: false,
         email: '',
         password: '',
-        name: ''
+        name: '',
+        alert: ''
     };
 
     toggle = () => {
@@ -24,7 +26,7 @@ class Login extends React.Component {
         console.log('Thichyo');
         e.preventDefault();
         try {
-            const user = await axios.post('http://localhost:3000/users/login', {
+            const user = await axios.post('/users/login', {
                 email: this.state.email,
                 password: this.state.password
             });
@@ -40,18 +42,21 @@ class Login extends React.Component {
             console.log(e);
         }
     };
-    signUp = async () => {
+    signUp = async (e) => {
+        e.preventDefault();
         try {
-            const user = await axios.post('http://localhost:3000/users', {
+            const user = await axios.post('/users', {
                 name: this.state.name,
                 email: this.state.email,
                 password: this.state.password
             });
             if (user) {
                 console.log(user);
+                this.setState({ alert: 'Account created successfully. You can now login' });
             }
         } catch (e) {
-            console.log(e);
+            this.setState({ alert: 'Something went wrong try again' });
+            console.log(e.message);
         }
     };
 
@@ -65,13 +70,22 @@ class Login extends React.Component {
         this.setState({ password: e.target.value });
     };
 
+    componentDidUpdate() {
+        if (this.state.alert !== '') {
+            setTimeout(() => {
+                this.setState({ alert: '' });
+            }, 10000);
+        }
+    }
+
     render() {
         return (
             <div className='login-body' style={this.props.style}>
+                {this.state.alert !== '' ? <Alert message={this.state.alert} type={'success'} /> : ''}
                 <h2>Welcome to our recipe app!</h2>
                 <div className={`login-container ${this.state.clicked ? 'right-panel-active' : ''}`} id='container'>
                     <div className='form-container sign-up-container'>
-                        <form action='#' className='login-form'>
+                        <form action='#' className='login-form' onSubmit={this.signUp}>
                             <h1>Create Account</h1>
 
                             <span>Use your email for registration</span>
@@ -93,7 +107,7 @@ class Login extends React.Component {
                                 value={this.state.password}
                                 placeholder='Password'
                             />
-                            <button onClick={this.signUp}>Sign Up</button>
+                            <button type='submit'>Sign Up</button>
                         </form>
                     </div>
                     <div className='form-container sign-in-container'>

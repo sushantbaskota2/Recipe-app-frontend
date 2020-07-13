@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './css/Modal.scss';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+import axios from '../axios';
 import { connect } from 'react-redux';
+import history from '../history';
 // const Modal = (props) => {
 // return ReactDOM.createPortal(
 //         <div
@@ -44,31 +45,36 @@ const Modal = ({ recipe, modalDismiss, user }) => {
                     <a
                         href='#'
                         onClick={async () => {
-                            if (favs || user.favorites.includes(recipe._id)) {
-                                await axios.delete(`http://localhost:3000/users/favorites/${recipe._id}`, {
-                                    headers: {
-                                        Authorization: `Bearer ${user.token}`
-                                    }
-                                });
-                                setFavs(false);
+                            if (!user) {
+                                history.push('/login');
                                 return;
                             } else {
-                                await axios.post(
-                                    'http://localhost:3000/users/favorites',
-                                    { recipeID: recipe._id },
-                                    {
+                                if (favs || user.favorites.includes(recipe._id)) {
+                                    await axios.delete(`/users/favorites/${recipe._id}`, {
                                         headers: {
                                             Authorization: `Bearer ${user.token}`
                                         }
-                                    }
-                                );
-                                setFavs(true);
-                                console.log('bhayo');
+                                    });
+                                    setFavs(false);
+                                    return;
+                                } else {
+                                    await axios.post(
+                                        '/users/favorites',
+                                        { recipeID: recipe._id },
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${user.token}`
+                                            }
+                                        }
+                                    );
+                                    setFavs(true);
+                                    console.log('bhayo');
+                                }
                             }
                         }}
                         class='button'
                     >
-                        {user.favorites.includes(recipe._id) || favs ? (
+                        {(user && user.favorites.includes(recipe._id)) || favs ? (
                             <span class='fas fa-heart ' />
                         ) : (
                             <span className='far fa-heart ' />
@@ -81,8 +87,8 @@ const Modal = ({ recipe, modalDismiss, user }) => {
                     <h3>Serving Size: {recipe.servings}</h3>
                     <ul>
                         <li>
-                            <span class='icon icon-users' />
-                            <span>1</span>
+                            <span class='fas fa-dollar-sign' style={{ color: 'blue', fontSize: '15px' }} />
+                            <span>{Math.round(recipe.pricePerServing / 5)}</span>
                         </li>
                         <li>
                             <span class='icon icon-clock' />
